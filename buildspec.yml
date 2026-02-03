@@ -2,15 +2,13 @@ version: 0.2
 
 phases:
   install:
-    runtime-versions:
-      python: 3.9
     commands:
-      - pip install flask
+      - echo "Install phase started"
   build:
     commands:
-      - echo "Build completed successfully"
+      - echo "Build phase started"
+      - echo "Simulating build success"
 
 artifacts:
   files:
     - '**/*'
-
