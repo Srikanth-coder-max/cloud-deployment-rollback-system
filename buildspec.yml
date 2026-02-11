@@ -3,11 +3,7 @@ version: 0.2
 phases:
   install:
     commands:
-      - pip install -r requirement.txt
+      - pip install -r requirements.txt
   build:
     commands:
-      - echo "Build completed successfully"
-artifacts:
-  files:
-    - app.py
-    - requirements.txt
+      - python app.py
