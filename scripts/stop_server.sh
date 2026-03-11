@@ -1,7 +1,7 @@
 #!/bin/bash
 
-PID=$(pgrep -f app.py)
+echo "Stopping existing application..."
 
-if [ -n "$PID" ]; then
-  kill -9 $PID
-fi
+pkill -f "python3 -m http.server" || true
+
+echo "Old application stopped."
