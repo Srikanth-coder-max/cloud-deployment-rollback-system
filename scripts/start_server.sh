@@ -1,7 +1,9 @@
 #!/bin/bash
 
+echo "Starting application..."
+
 cd /home/ec2-user/app
 
-pip3 install -r requirements.txt
+nohup python3 -m http.server 8080 > server.log 2>&1 &
 
-nohup python3 app.py > app.log 2>&1 &
+echo "Application started on port 8080."
