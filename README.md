@@ -1,5 +1,4 @@
 # Cloud Deployment Rollback System
-
 An automated AWS deployment pipeline that protects releases with hands-free rollback. It solves the operational problem of shipping a bad deployment to EC2 and then waiting on manual intervention to restore service.
 
 ## Description
