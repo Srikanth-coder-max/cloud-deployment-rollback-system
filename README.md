@@ -98,3 +98,28 @@ automation/
 - The sample application is intentionally minimal so the deployment and rollback mechanics stay easy to inspect.
 - The Lambda function does not create a new app version; it promotes the most recent successful revision.
 - If you have real runtime numbers from your own deployment, replace the Validation Snapshot with those results.
+
+## Troubleshooting CodeDeploy
+
+Use `aws deploy` commands (not `aws codedeploy`) with AWS CLI v2:
+
+```powershell
+aws deploy get-deployment-group --application-name rollback-codedeploy-app --deployment-group-name rollback-codedeploy-dg --region ap-southeast-2
+aws deploy list-deployments --application-name rollback-codedeploy-app --deployment-group-name rollback-codedeploy-dg --region ap-southeast-2 --include-only-statuses Failed InProgress Succeeded
+aws deploy get-deployment --deployment-id <deployment-id> --region ap-southeast-2
+```
+
+On the EC2 instance, inspect CodeDeploy agent and lifecycle logs:
+
+```bash
+sudo systemctl status codedeploy-agent
+sudo tail -n 200 /var/log/aws/codedeploy-agent/codedeploy-agent.log
+sudo tail -n 200 /opt/codedeploy-agent/deployment-root/deployment-logs/codedeploy-agent-deployments.log
+```
+
+Common failure causes in this project:
+
+- CodeDeploy application/deployment group is missing or points to the wrong EC2 tag.
+- EC2 instance does not have the CodeDeploy agent running.
+- Lifecycle hook scripts fail due to missing runtime packages or Linux line-ending issues.
+- AWS credentials do not have access to AWS Deploy APIs (`SubscriptionRequiredException` or IAM deny).
